@@ -1,4 +1,1531 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>César José Valladares | FullStack Developer & Data Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --card: #1a1a24;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --accent: #6C63FF;
+    --accent2: #00D4AA;
+    --accent3: #FF6B6B;
+    --amber: #FFB340;
+    --text: #f0f0f5;
+    --muted: #8888a0;
+    --muted2: #5a5a72;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #fff !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 4rem;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(108,99,255,0.1);
+    border: 1px solid rgba(108,99,255,0.3);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 4vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 .name-highlight {
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .role-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent2);
+    border: 1px solid rgba(0,212,170,0.3);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    background: rgba(0,212,170,0.05);
+  }
+  .hero-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover {
+    background: #8178ff;
+    transform: translateY(-2px);
+  }
+  .btn-secondary {
+    color: var(--text);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid var(--border2);
+    transition: all 0.2s;
+    background: var(--card);
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    position: relative;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .profile-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(108,99,255,0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .profile-avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .profile-name {
+    font-family: var(--font-head);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .profile-title {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  .profile-stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .stat {
+    text-align: center;
+    padding: 0.75rem;
+    background: var(--bg3);
+    border-radius: 10px;
+  }
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+  .profile-socials {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+  }
+  .social-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* FLOATING TECH PILLS */
+  .tech-float {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 100px;
+    font-weight: 500;
+    animation: float 4s ease-in-out infinite;
+  }
+  .tech-float.f1 {
+    top: -16px; right: 40px;
+    background: rgba(108,99,255,0.15);
+    border: 1px solid rgba(108,99,255,0.3);
+    color: var(--accent);
+    animation-delay: 0s;
+  }
+  .tech-float.f2 {
+    bottom: 60px; right: -20px;
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.3);
+    color: var(--accent2);
+    animation-delay: 1.5s;
+  }
+  .tech-float.f3 {
+    bottom: -10px; left: 20px;
+    background: rgba(255,179,64,0.1);
+    border: 1px solid rgba(255,179,64,0.3);
+    color: var(--amber);
+    animation-delay: 0.8s;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* SECTION COMMON */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 4rem;
+  }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    max-width: 500px;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .about-text p strong { color: var(--text); }
+  .about-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .info-item {
+    padding: 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .info-label {
+    font-size: 0.7rem;
+    color: var(--muted2);
+    font-family: var(--font-mono);
+    margin-bottom: 0.25rem;
+  }
+  .info-value {
+    font-size: 0.875rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .about-quote {
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .about-quote span {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: normal;
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+  }
+
+  /* SKILLS */
+  .skills-universe {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-domain {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .skill-domain:hover { border-color: var(--border2); }
+  .skill-domain-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .skill-domain-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+  .skill-domain-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .skill-domain-sub {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .skill-pill {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  /* EXPERIENCE */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+  }
+  .exp-timeline {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+  .exp-nav-item {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 0.25rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .exp-nav-item.active {
+    background: rgba(108,99,255,0.1);
+    border-color: rgba(108,99,255,0.3);
+  }
+  .exp-nav-item-title {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--text);
+  }
+  .exp-nav-item.active .exp-nav-item-title { color: var(--accent); }
+  .exp-nav-item-date {
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+  .exp-panel { display: none; }
+  .exp-panel.active { display: block; }
+  .exp-header {
+    margin-bottom: 1.5rem;
+  }
+  .exp-company {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent2);
+    margin-bottom: 0.25rem;
+  }
+  .exp-role {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .exp-date {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+  }
+  .exp-desc {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+  .exp-desc ul {
+    margin-left: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .exp-desc li {
+    margin-bottom: 0.5rem;
+  }
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .exp-tag {
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    padding: 0.25rem 0.65rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+  }
+  .exp-links { display: flex; gap: 0.75rem; }
+  .exp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(108,99,255,0.3);
+    padding: 0.4rem 0.85rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    background: rgba(108,99,255,0.05);
+  }
+  .exp-link:hover {
+    background: rgba(108,99,255,0.15);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+  .project-banner {
+    height: 6px;
+  }
+  .project-body {
+    padding: 1.5rem;
+  }
+  .project-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  .project-type {
+    font-size: 0.68rem;
+    font-family: var(--font-mono);
+    color: var(--muted2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .project-status {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+  .status-live {
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.3);
+    color: var(--accent2);
+  }
+  .project-title {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+  .stack-tag {
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    padding: 0.2rem 0.5rem;
+    background: var(--bg3);
+    border-radius: 4px;
+    color: var(--muted2);
+  }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 0.65rem; }
+
+  /* CERTS */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .cert-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .cert-card:hover { border-color: var(--border2); }
+  .cert-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .cert-title {
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin-bottom: 0.2rem;
+  }
+  .cert-org {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+  .cert-date {
+    font-size: 0.68rem;
+    font-family: var(--font-mono);
+    color: var(--muted2);
+  }
+
+  /* EDU */
+  .edu-timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .edu-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .edu-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .edu-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 1.75rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .edu-period {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent2);
+    margin-bottom: 0.5rem;
+  }
+  .edu-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  .edu-institution {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    transition: all 0.2s;
+  }
+  .contact-card:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+  .contact-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(108,99,255,0.1);
+    border: 1px solid rgba(108,99,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .contact-detail-label {
+    font-size: 0.72rem;
+    color: var(--muted2);
+    font-family: var(--font-mono);
+    margin-bottom: 0.15rem;
+  }
+  .contact-detail-val {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .contact-form-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--accent);
+  }
+  .form-textarea { min-height: 120px; resize: vertical; }
+  .form-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-family: var(--font-body);
+  }
+  .form-btn:hover { opacity: 0.85; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-copy {
+    font-size: 0.8rem;
+    color: var(--muted2);
+    font-family: var(--font-mono);
+  }
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* GRID DECORATION */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* GLOW ORBS */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb1 { width: 500px; height: 500px; background: var(--accent); top: -100px; right: -100px; }
+  .orb2 { width: 400px; height: 400px; background: var(--accent2); bottom: 10%; left: -100px; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 7rem 2rem 3rem; }
+    .hero-visual { order: -1; }
+    .about-grid, .exp-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-timeline { position: static; }
+    .section-inner { padding: 4rem 2rem; }
+    nav { padding: 1rem; }
+    .nav-links { gap: 1rem; font-size: 0.8rem; }
+    footer { flex-direction: column; gap: 1rem; padding: 2rem; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .profile-stats { grid-template-columns: repeat(3,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<nav>
+  <div class="nav-logo">César&lt;JO/&gt;</div>
+  <ul class="nav-links">
+    <li><a href="#about">Acerca</a></li>
+    <li><a href="#skills">Habilidades</a></li>
+    <li><a href="#experience">Experiencia</a></li>
+    <li><a href="#projects">Proyectos</a></li>
+    <li><a href="#contact" class="nav-cta">Contactar</a></li>
+  </ul>
+</nav>
+
+<div class="hero" style="z-index:1;position:relative;">
+  <div class="hero-content">
+    <div class="hero-badge">👨🏾‍💻 Disponible para proyectos</div>
+    <h1>
+      <span class="name-highlight">César José</span><br>
+      Valladares R.
+    </h1>
+    <div class="hero-roles">
+      <span class="role-tag">FullStack Dev</span>
+      <span class="role-tag">Data Analytics</span>
+      <span class="role-tag">Business Intelligence</span>
+      <span class="role-tag">Power BI</span>
+      <span class="role-tag">Ciberseguridad</span>
+    </div>
+    <p class="hero-desc">
+      Ingeniero en Software y Sistemas Computacionales con más de 5 años de experiencia. Especializado en desarrollo fullstack, análisis de datos e inteligencia de negocio. Construyo sistemas que optimizan procesos y facilitan la toma de decisiones.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Hablemos →</a>
+      <a href="https://cesar-jo.github.io/CV-Cesar/CV-César%20José.pdf" target="_blank" class="btn-secondary">Descargar CV</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="tech-float f1">Power BI ✦</div>
+    <div class="tech-float f2">React + Laravel</div>
+    <div class="tech-float f3">SQL • Python</div>
+    <div class="profile-card">
+      <div class="profile-avatar">CJ</div>
+      <div class="profile-name">César José Valladares</div>
+      <div class="profile-title">ING. Software & Sistemas · CDMX</div>
+      <div class="profile-stats">
+        <div class="stat">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Años exp.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Proyectos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Tecnologías</div>
+        </div>
+      </div>
+      <div class="profile-socials">
+        <a href="https://github.com/Cesar-jo" target="_blank" class="social-btn">⌥ GitHub</a>
+        <a href="https://www.linkedin.com/in/césar-jose-valladares-rodriguez-2aa87b163/" target="_blank" class="social-btn">in LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="about-strip">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text">
+          <div class="section-label">// about_me</div>
+          <h2 class="section-title">Construyo soluciones,<br>no solo código</h2>
+          <p>Soy <strong>César José Valladares Rodríguez</strong>, Ingeniero en Software y Sistemas con más de 5 años de trayectoria ayudando a organizaciones a diseñar e implementar soluciones que optimizan procesos.</p>
+          <p>Mi stack abarca desde el <strong>desarrollo fullstack</strong> con React, Laravel, PHP, C# y .NET, hasta la <strong>inteligencia de negocio</strong> con Power BI, SQL avanzado y Python para análisis de datos y ciberseguridad.</p>
+          <div class="about-info">
+            <div class="info-item">
+              <div class="info-label">correo</div>
+              <div class="info-value">valladarescesar.mc@gmail.com</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">teléfono</div>
+              <div class="info-value">+52 55 8635 7535</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">ubicación</div>
+              <div class="info-value">CDMX, México</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">disponibilidad</div>
+              <div class="info-value" style="color:var(--accent2)">✦ Abierto a proyectos</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="about-quote">
+            "Los datos son el nuevo petróleo, pero son inútiles sin un buen motor que los procese. Yo construyo ese motor."
+            <span>— César José, Dev & Data Analyst</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">// tech_stack</div>
+    <h2 class="section-title">Habilidades & Tecnologías</h2>
+    <p class="section-sub">Un ecosistema amplio enfocado en la integración de programación con analítica de datos para soluciones escalables.</p>
+
+    <div class="skills-universe">
+
+      <div class="skill-domain">
+        <div class="skill-domain-header">
+          <div class="skill-domain-icon" style="background:rgba(108,99,255,0.15)">📊</div>
+          <div>
+            <div class="skill-domain-title">Data & BI</div>
+            <div class="skill-domain-sub">Analytics · Business Intelligence</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.3);color:#a89bff">Power BI</span>
+          <span class="skill-pill" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.3);color:#a89bff">SQL Server</span>
+          <span class="skill-pill" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.3);color:#a89bff">DAX</span>
+          <span class="skill-pill" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.3);color:#a89bff">ETL</span>
+          <span class="skill-pill" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.3);color:#a89bff">Pandas</span>
+          <span class="skill-pill" style="background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.3);color:#a89bff">Excel Avanzado</span>
+        </div>
+      </div>
+
+      <div class="skill-domain">
+        <div class="skill-domain-header">
+          <div class="skill-domain-icon" style="background:rgba(0,212,170,0.12)">⚛️</div>
+          <div>
+            <div class="skill-domain-title">Frontend & Web</div>
+            <div class="skill-domain-sub">UI/UX · Responsive · SPA</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill" style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:#00c49a">React</span>
+          <span class="skill-pill" style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:#00c49a">JavaScript</span>
+          <span class="skill-pill" style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:#00c49a">HTML5/CSS3</span>
+          <span class="skill-pill" style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:#00c49a">Bootstrap</span>
+          <span class="skill-pill" style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:#00c49a">SEO</span>
+        </div>
+      </div>
+
+      <div class="skill-domain">
+        <div class="skill-domain-header">
+          <div class="skill-domain-icon" style="background:rgba(255,107,107,0.12)">🔧</div>
+          <div>
+            <div class="skill-domain-title">Backend</div>
+            <div class="skill-domain-sub">APIs · MVC · Enterprise</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill" style="background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:#ff8a8a">Laravel / PHP</span>
+          <span class="skill-pill" style="background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:#ff8a8a">.NET / C#</span>
+          <span class="skill-pill" style="background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:#ff8a8a">Python</span>
+          <span class="skill-pill" style="background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:#ff8a8a">MySQL</span>
+        </div>
+      </div>
+
+      <div class="skill-domain">
+        <div class="skill-domain-header">
+          <div class="skill-domain-icon" style="background:rgba(255,179,64,0.12)">🛡️</div>
+          <div>
+            <div class="skill-domain-title">Infraestructura</div>
+            <div class="skill-domain-sub">Redes · Ciberseguridad · Gestión</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill" style="background:rgba(255,179,64,0.1);border:1px solid rgba(255,179,64,0.3);color:#ffc055">Ciberseguridad</span>
+          <span class="skill-pill" style="background:rgba(255,179,64,0.1);border:1px solid rgba(255,179,64,0.3);color:#ffc055">Admin de Redes</span>
+          <span class="skill-pill" style="background:rgba(255,179,64,0.1);border:1px solid rgba(255,179,64,0.3);color:#ffc055">SCRUM</span>
+          <span class="skill-pill" style="background:rgba(255,179,64,0.1);border:1px solid rgba(255,179,64,0.3);color:#ffc055">SharePoint</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label">// career_path</div>
+    <h2 class="section-title">Experiencia Profesional</h2>
+    
+    <div class="exp-grid">
+      <div class="exp-timeline">
+        <div class="exp-nav-item active" onclick="showExp(0)">
+          <div class="exp-nav-item-title">HitServices / EcomTrading</div>
+          <div class="exp-nav-item-date">2025 — Actualidad</div>
+        </div>
+        <div class="exp-nav-item" onclick="showExp(1)">
+          <div class="exp-nav-item-title">Grupo DICSSA</div>
+          <div class="exp-nav-item-date">2023 — 2025</div>
+        </div>
+        <div class="exp-nav-item" onclick="showExp(2)">
+          <div class="exp-nav-item-title">Virtualia TIC</div>
+          <div class="exp-nav-item-date">2019 — 2022</div>
+        </div>
+      </div>
+
+      <div class="exp-content">
+        <div class="exp-panel active">
+          <div class="exp-header">
+            <div class="exp-company">HitServices / EcomTrading</div>
+            <h3 class="exp-role">Analista de Datos BI (Consultor)</h3>
+            <div class="exp-date">Mayo 2025 — Actualidad | México</div>
+          </div>
+          <div class="exp-desc">
+            <ul>
+              <li>Desarrollo de dashboards interactivos en Power BI para áreas de Tesorería, Contabilidad y Operaciones, reduciendo significativamente los tiempos de análisis.</li>
+              <li>Implementación de métricas críticas: Órdenes de Compra sin recepción, Cumplimiento de SLA y reportes de volumetría.</li>
+              <li>Creación de un sistema de facturación en .NET/C# para automatizar la conversión de XML a PDF, optimizando la gestión documental contable.</li>
+              <li>Integración y limpieza de datos (ETL) desde SQL, Excel y SharePoint para asegurar una única fuente de verdad.</li>
+            </ul>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Power BI</span>
+            <span class="exp-tag">.NET</span>
+            <span class="exp-tag">SQL Server</span>
+            <span class="exp-tag">DAX</span>
+            <span class="exp-tag">SharePoint</span>
+          </div>
+        </div>
+
+        <div class="exp-panel">
+          <div class="exp-header">
+            <div class="exp-company">Grupo DICSSA</div>
+            <h3 class="exp-role">Jefe de TI</h3>
+            <div class="exp-date">Diciembre 2023 — 2025 | CDMX</div>
+          </div>
+          <div class="exp-desc">
+            <ul>
+              <li>Liderazgo del desarrollo de un CRM a medida para la administración de proyectos de infraestructura de la SICT (San Luis Potosí).</li>
+              <li>Implementación de políticas robustas de ciberseguridad y administración de redes a nivel organizacional.</li>
+              <li>Desarrollo de sistemas internos de administración vehicular y gestión de recursos humanos.</li>
+            </ul>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">FullStack Dev</span>
+            <span class="exp-tag">Ciberseguridad</span>
+            <span class="exp-tag">CRM Design</span>
+            <span class="exp-tag">Redes</span>
+          </div>
+        </div>
+
+        <div class="exp-panel">
+          <div class="exp-header">
+            <div class="exp-company">Virtualia TIC</div>
+            <h3 class="exp-role">Ingeniero de Software (FullStack)</h3>
+            <div class="exp-date">Noviembre 2019 — Octubre 2022 | Acapulco</div>
+          </div>
+          <div class="exp-desc">
+            <ul>
+              <li>Desarrollo de soluciones ERP personalizadas y aplicaciones multiplataforma bajo metodologías ágiles (SCRUM).</li>
+              <li>Coordinación de sistemas especializados como SAI (Inmobiliario) y SKY (Control de inventarios).</li>
+              <li>Liderazgo en proyectos de SEO y posicionamiento web para marcas locales.</li>
+            </ul>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">PHP</span>
+            <span class="exp-tag">Laravel</span>
+            <span class="exp-tag">React</span>
+            <span class="exp-tag">SCRUM</span>
+            <span class="exp-tag">ERP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">// work_showcase</div>
+    <h2 class="section-title">Proyectos Destacados</h2>
+    
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-banner" style="background:var(--accent)"></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="project-type">Business Intelligence</span>
+            <span class="project-status status-live">Producción</span>
+          </div>
+          <h3 class="project-title">Tablero de Cumplimiento SLA</h3>
+          <p class="project-desc">Sistema de monitoreo de tiempos de respuesta para el área de compras, integrando datos de SAP y Navision para control de requisiciones.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Power BI</span>
+            <span class="stack-tag">SQL</span>
+            <span class="stack-tag">DAX</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-banner" style="background:var(--accent2)"></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="project-type">Desarrollo C#</span>
+            <span class="project-status status-live">Activo</span>
+          </div>
+          <h3 class="project-title">XML-to-PDF Invoice Engine</h3>
+          <p class="project-desc">Herramienta automatizada que procesa archivos XML de facturación y genera documentos PDF optimizados para gestión contable.</p>
+          <div class="project-stack">
+            <span class="stack-tag">.NET</span>
+            <span class="stack-tag">C#</span>
+            <span class="stack-tag">FileSystem</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-banner" style="background:var(--amber)"></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="project-type">CRM / ERP</span>
+            <span class="project-status status-live">Lanzado</span>
+          </div>
+          <h3 class="project-title">Sistema SAI Inmobiliario</h3>
+          <p class="project-desc">Plataforma integral para administración inmobiliaria con módulos de inventario, CRM de clientes y reportes financieros.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Laravel</span>
+            <span class="stack-tag">MySQL</span>
+            <span class="stack-tag">React</span>
+          </div>
+        </div>
+      </div>
+
+       <div class="project-card" onclick="window.open('https://icapsainfraestructura.com/','_blank')">
+        <div class="project-banner" style="background:linear-gradient(90deg,var(--amber),var(--accent3))"></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="project-type">Sitio Web</span>
+            <span class="project-status status-live">✦ Live</span>
+          </div>
+          <div class="project-title">ICAPSA Infraestructura</div>
+          <p class="project-desc">Sitio web corporativo para empresa de infraestructura. Diseño moderno, responsive y optimizado para SEO.</p>
+          <div class="project-stack">
+            <span class="stack-tag">HTML5</span><span class="stack-tag">CSS3</span>
+            <span class="stack-tag">JS</span><span class="stack-tag">SEO</span>
+          </div>
+          <a href="https://icapsainfraestructura.com/" target="_blank" class="project-link">Ver proyecto →</a>
+        </div>
+      </div>
+ 
+      <div class="project-card" onclick="window.open('https://youtu.be/lykwxAVSRSY','_blank')">
+        <div class="project-banner" style="background:linear-gradient(90deg,var(--accent3),#ff9f43)"></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="project-type">Sistema Interno</span>
+            <span class="project-status status-live">✦ Demo</span>
+          </div>
+          <div class="project-title">Control Vehicular — DICSSA</div>
+          <p class="project-desc">Sistema interno de administración y control vehicular para Grupo DICSSA. Seguimiento de unidades, mantenimientos y asignaciones en tiempo real.</p>
+          <div class="project-stack">
+            <span class="stack-tag">Laravel</span><span class="stack-tag">PHP</span>
+            <span class="stack-tag">MySQL</span><span class="stack-tag">React</span>
+          </div>
+          <a href="https://youtu.be/lykwxAVSRSY" target="_blank" class="project-link">Ver demo →</a>
+        </div>
+      </div>
+ 
+      <div class="project-card" onclick="window.open('https://www.youtube.com/watch?v=qi51sIxvv5g','_blank')">
+        <div class="project-banner" style="background:linear-gradient(90deg,#9b59b6,var(--accent))"></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="project-type">Sistema de Inventario</span>
+            <span class="project-status status-live">✦ Demo</span>
+          </div>
+          <div class="project-title">SKY — Control de Inventario</div>
+          <p class="project-desc">Sistema de control de inventario, personal y reportes para empresa SKY en Acapulco. Dashboard con gráficas y exportación de datos.</p>
+          <div class="project-stack">
+            <span class="stack-tag">PHP</span><span class="stack-tag">MySQL</span>
+            <span class="stack-tag">JavaScript</span><span class="stack-tag">Reportes</span>
+          </div>
+          <a href="https://www.youtube.com/watch?v=qi51sIxvv5g" target="_blank" class="project-link">Ver demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="window.open('https://www.aldassa.com.mx','_blank')">
+  <div class="project-banner" style="background:linear-gradient(90deg, #2c3e50, #2980b9)"></div>
+  <div class="project-body">
+    <div class="project-meta">
+      <span class="project-type">CRM & Administración</span>
+      <span class="project-status status-live">✦ En Producción</span>
+    </div>
+    <div class="project-title">SICT — CRM de Gestión de Proyectos</div>
+    <p class="project-desc">Sistema centralizado para la SICT de San Luis Potosí. Permite la administración de obras de infraestructura, seguimiento de proyectos y visualización de KPIS operativos.</p>
+    <div class="project-stack">
+      <span class="stack-tag">Fullstack</span>
+      <span class="stack-tag">Análisis de Datos</span>
+      <span class="stack-tag">Gestión Documental</span>
+    </div>
+    <a href="https://www.aldassa.com.mx" target="_blank" class="project-link">Ver plataforma →</a>
+  </div>
+</div>
+ 
+      <div class="project-card" onclick="window.open('https://soytubrother.github.io/YoSoyTuBrother/','_blank')">
+        <div class="project-banner" style="background:linear-gradient(90deg,#e74c3c,#c0392b)"></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="project-type">Sitio Político</span>
+            <span class="project-status status-live">✦ Live</span>
+          </div>
+          <div class="project-title">Campaña — Movimiento Ciudadano</div>
+          <p class="project-desc">Desarrollo frontend de la página para candidato a presidencia de Acapulco "El Brother" por Movimiento Ciudadano. Diseño atractivo y responsive.</p>
+          <div class="project-stack">
+            <span class="stack-tag">HTML5</span><span class="stack-tag">CSS3</span>
+            <span class="stack-tag">JavaScript</span>
+          </div>
+          <a href="https://soytubrother.github.io/YoSoyTuBrother/" target="_blank" class="project-link">Ver proyecto →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="section-inner">
+    <div class="section-label">// knowledge_base</div>
+    <h2 class="section-title">Certificaciones & Cursos</h2>
+    
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon" style="background:rgba(108,99,255,0.1)">🎓</div>
+        <div>
+          <div class="cert-title">Data Analyst Associate (PL-300)</div>
+          <div class="cert-org">Microsoft Certified</div>
+          <div class="cert-date">Examen en proceso</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:rgba(108,99,255,0.1)">📦</div>
+        <div>
+          <div class="cert-title">Power BI Advanced</div>
+          <div class="cert-org">Microsoft Learn</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:rgba(0,212,170,0.1)">🐘</div>
+        <div>
+          <div class="cert-title">PHP & Laravel Framework</div>
+          <div class="cert-org">Desarrollo Backend Escalable</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:rgba(0,212,170,0.1)">🗄️</div>
+        <div>
+          <div class="cert-title">MySQL Avanzado</div>
+          <div class="cert-org">Certificación Profesional</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:rgba(0,212,170,0.1)">⚛️</div>
+        <div>
+          <div class="cert-title">React.js Frontend</div>
+          <div class="cert-org">Interfaces Dinámicas</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:rgba(0,212,170,0.1)">🌐</div>
+        <div>
+          <div class="cert-title">Web Development (HTML5, CSS3, JS)</div>
+          <div class="cert-org">Desarrollo Frontend Moderno</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:rgba(255,179,64,0.1)">🐍</div>
+        <div>
+          <div class="cert-title">Python Fundamentals</div>
+          <div class="cert-org">Programación y Análisis</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:rgba(255,179,64,0.1)">⚡</div>
+        <div>
+          <div class="cert-title">SCRUM Fundamentals</div>
+          <div class="cert-org">Metodologías Ágiles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-inner">
+    <div class="section-label">// education</div>
+    <h2 class="section-title">Formación Académica</h2>
+    <div class="edu-timeline">
+      <div class="edu-item">
+        <div class="edu-period">2019 — 2022</div>
+        <div class="edu-title">Ingeniería en Software y Sistemas Computacionales</div>
+        <div class="edu-institution">Universidad Interamericana para el Desarrollo (UNID)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="section-inner">
+    <div class="section-label">// say_hello</div>
+    <h2 class="section-title">¿Tienes un proyecto en mente?</h2>
+    <p class="section-sub">Conversemos sobre cómo puedo ayudarte a transformar tus datos en decisiones o construir tu siguiente plataforma digital.</p>
+    
+    <div class="contact-grid">
+      <div class="contact-info">
+        <a href="mailto:valladarescesar.mc@gmail.com" class="contact-card">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-detail-label">Enviame un correo</div>
+            <div class="contact-detail-val">valladarescesar.mc@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+525586357535" class="contact-card">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-detail-label">Llamada o WhatsApp</div>
+            <div class="contact-detail-val">+52 55 8635 7535</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/Cesar Jose Valladares Rodriguez" target="_blank" class="contact-card">
+          <div class="contact-icon">🔗</div>
+          <div>
+            <div class="contact-detail-label">LinkedIn</div>
+            <div class="contact-detail-val">César José Valladares</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="contact-form-wrap">
+        <form action="#">
+          <div class="form-group">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-input" placeholder="Tu nombre...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" class="form-input" placeholder="correo@ejemplo.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mensaje</label>
+            <textarea class="form-textarea" placeholder="¿En qué puedo ayudarte?"></textarea>
+          </div>
+          <button type="submit" class="form-btn">Enviar Mensaje</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2026 César José Valladares | Diseñado para el impacto de datos</div>
+  <div class="footer-links">
+    <a href="https://github.com/Cesar-jo" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/Cesar Jose Valladares Rodriguez" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  function showExp(index) {
+    const panels = document.querySelectorAll('.exp-panel');
+    const navItems = document.querySelectorAll('.exp-nav-item');
+    
+    panels.forEach(p => p.classList.remove('active'));
+    navItems.forEach(n => n.classList.remove('active'));
+    
+    panels[index].classList.add('active');
+    navItems[index].classList.add('active');
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>
 <html lang="en-US">
 
 <head>
@@ -141,8 +1668,8 @@
                         </div>
                     </div>
                 </div>
-                <!------------------------------------------- Apartado Educacion  ---------------------------------------------------->
-                <div class="shadow-1-strong bg-white my-5 p-5" id="education">
+                <!------------------------------------------- Apartado Educacion  ----------------------------------------------------
+                <div class="shadow-1-strong bg-white my-5 p-5" id="education"
                     <div class="work-experience-section">
                         <h2 class="h2 fw-light mb-4">Educación</h2>
                         <div class="timeline">
@@ -180,9 +1707,9 @@
                         </div>
                     </div>
                 </div>
+---->
 
-
-                <!------------------------------------------- Fin Apartado Educacion  ---------------------------------------------------->
+                <!------------------------------------------- Fin Apartado Educacion  --------------------------------------------------
 
 
                 <div class="shadow-1-strong bg-white my-5 p-5" id="skills">
@@ -236,7 +1763,7 @@
 
                                 
 
-                                <!--   ------------------------------------------------------------------------------->
+                                <!--  
 
                             </div>
                             <div class="col-md-6">
@@ -597,7 +2124,7 @@
                     </div>
                 </div>
             </div>
-
+-->
 <!-------------------------------------------------------
 
             <div class="shadow-1-strong bg-white my-5 p-5 d-print-none" id="portfolio">
@@ -719,7 +2246,7 @@
                                 </div>
                             </div>
                         </div>
------------------------------>
+----------------------------
                     </div>
 
                 </div>
@@ -730,10 +2257,10 @@
     </div>
 
 
-  <!-- Messenger Chat Plugin Code -->
+  <!-- Messenger Chat Plugin Code 
     <div id="fb-root"></div>
 
-    <!-- Your Chat Plugin code -->
+    <!-- Your Chat Plugin code -
     <div id="fb-customer-chat" class="fb-customerchat">
     </div>
 
@@ -794,4 +2321,4 @@
     <script src="scripts/main.js?ver=1.2.1"></script>
 </body>
 
-</html>
+</html>-->
